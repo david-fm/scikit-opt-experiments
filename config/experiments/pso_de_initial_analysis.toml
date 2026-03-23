@@ -1,0 +1,63 @@
+[experiment]
+name = "pso_de_initial_analysis"
+output_dir = "outputs/runs/experiments_pso_de"
+runs = 100
+verbose = 1
+log_scale = false
+track_performance = false
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "pso"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_PSO"
+
+[[tasks]]
+objective_id = "griewank"
+algorithm_id = "pso"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_PSO"
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "de"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_DE"
+
+[[tasks]]
+objective_id = "griewank"
+algorithm_id = "de"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_DE"
+
+[algorithms.pso]
+base_params = { w = 0.8, c1 = 0.5, c2 = 0.5, pop = 50, max_iter = 100 }
+name_map = { max_iter = "iter" }
+
+[[algorithms.pso.sets]]
+name = "Population Size Analysis"
+variants = [{ pop = 20 }, { pop = 50 }, { pop = 1000 }]
+
+[[algorithms.pso.sets]]
+name = "Iteration Analysis"
+variants = [{ max_iter = 50 }, { max_iter = 200 }, { max_iter = 1000 }]
+
+[[algorithms.pso.sets]]
+name = "PSO Coefficients Analysis"
+variants = [
+    { w = 0.8, c1 = 0.5, c2 = 0.5 },
+    { w = 0.9, c1 = 2.0, c2 = 1.0 },
+    { w = 0.5, c1 = 1.0, c2 = 1.0 },
+]
+
+[algorithms.de]
+base_params = { size_pop = 50, max_iter = 100 }
+name_map = { size_pop = "pop", max_iter = "iter" }
+
+[[algorithms.de.sets]]
+name = "Population Size Analysis"
+variants = [{ size_pop = 20 }, { size_pop = 50 }, { size_pop = 1000 }]
+
+[[algorithms.de.sets]]
+name = "Iteration Analysis"
+variants = [{ max_iter = 50 }, { max_iter = 200 }, { max_iter = 1000 }]

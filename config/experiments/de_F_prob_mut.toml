@@ -1,0 +1,38 @@
+[experiment]
+name = "de_F_prob_mut"
+output_dir = "outputs/runs/de_F_prob_mut_combined"
+runs = 100
+verbose = 1
+log_scale = true
+track_performance = true
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "de"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_DE"
+lb = -8
+ub = 8
+
+[[tasks]]
+objective_id = "griewank"
+algorithm_id = "de"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_DE"
+lb = -8
+ub = 8
+
+[algorithms.de]
+base_params = { size_pop = 100, max_iter = 1000 }
+name_map = { size_pop = "pop", max_iter = "iter", prob_mut = "mut" }
+
+[[algorithms.de.sets]]
+name = "F Analysis with Mutation Probability Analysis"
+variants = [
+    { F = 0.2, prob_mut = 0.1 },
+    { F = 0.2, prob_mut = 0.5 },
+    { F = 0.2, prob_mut = 1.0 },
+    { F = 0.8, prob_mut = 0.1 },
+    { F = 0.8, prob_mut = 0.5 },
+    { F = 0.8, prob_mut = 1.0 },
+]

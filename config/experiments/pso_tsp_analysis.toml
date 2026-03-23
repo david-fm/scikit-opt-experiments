@@ -1,0 +1,26 @@
+[experiment]
+name = "pso_tsp_analysis"
+output_dir = "outputs/runs/experiments_pso_tsp"
+runs = 100
+verbose = 1
+log_scale = false
+track_performance = false
+
+[[tasks]]
+objective_id = "tsp.berlin52.rounded"
+algorithm_id = "pso_tsp"
+objective_params = { tsp_base_path = "data/berlin52" }
+subdir_template = "PSO_TSP_speed_berlin52___"
+track_performance = true
+
+[algorithms.pso_tsp]
+base_params = { w = 0.8, c1 = 0.5, c2 = 0.5, size_pop = 1000, max_iter = 200 }
+name_map = { max_iter = "iter" }
+
+[[algorithms.pso_tsp.sets]]
+name = "Population Size Analysis"
+variants = [{ size_pop = 20 }, { size_pop = 50 }, { size_pop = 1000 }]
+
+[[algorithms.pso_tsp.sets]]
+name = "Iteration Analysis"
+variants = [{ max_iter = 50 }, { max_iter = 200 }, { max_iter = 1000 }]

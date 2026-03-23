@@ -1,0 +1,25 @@
+[project]
+name = "scikit-opt-experiments"
+version = "1.0.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "matplotlib>=3.10.8",
+    "pandas>=3.0.0",
+    "pip>=26.0.1",
+    "scikit-opt>=0.6.6",
+    "tqdm>=4.67.3",
+]
+
+[project.scripts]
+run-experiment = "ec_experiments.run_experiment:main"
+run-visual-diagnostic = "ec_experiments.run_visual_diagnostic:main"
+
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ec_experiments"]

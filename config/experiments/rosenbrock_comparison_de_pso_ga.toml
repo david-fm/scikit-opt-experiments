@@ -1,0 +1,66 @@
+[experiment]
+name = "rosenbrock_comparison_de_pso_ga"
+output_dir = "outputs/runs/rosenbrock_comparison_de_pso_ga"
+runs = 100
+verbose = 2
+log_scale = true
+track_performance = true
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "ga.modified.v1"
+objective_params = { n_dim = 4 }
+subdir_template = "GA"
+lb = -8
+ub = 8
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "de"
+objective_params = { n_dim = 4 }
+subdir_template = "DE"
+lb = -8
+ub = 8
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "pso"
+objective_params = { n_dim = 4 }
+subdir_template = "PSO"
+
+[algorithms."ga.modified.v1"]
+base_params = { size_pop = 50, max_iter = 1000, prob_mut = 0.01, precision = 1e-7, window_size = 40 }
+name_map = { size_pop = "pop", prob_mut = "mut", precision = "prec", window_size = "win", max_iter = "iter" }
+
+[[algorithms."ga.modified.v1".sets]]
+name = "GA - Best Configurations"
+variants = [
+  { size_pop = 1000, window_size = 40, prob_mut = 0.01 },
+  { size_pop = 50, precision = 0.001, window_size = 40 },
+  { size_pop = 50, window_size = 40, prob_mut = 0.01 },
+  { size_pop = 1000, window_size = 40, prob_mut = 0.01, precision = 0.001 },
+]
+
+[algorithms.de]
+base_params = { size_pop = 100, max_iter = 1000 }
+name_map = { size_pop = "pop", max_iter = "iter", F = "F", prob_mut = "mut" }
+
+[[algorithms.de.sets]]
+name = "DE - Best Configurations"
+variants = [
+  { F = 0.8, prob_mut = 1.0, size_pop = 100 },
+  { F = 0.8, prob_mut = 0.5, size_pop = 100 },
+  { size_pop = 1000, max_iter = 200, prob_mut = 1.0, F = 0.8 },
+]
+
+[algorithms.pso]
+base_params = { w = 0.8, c1 = 0.5, c2 = 0.5, pop = 1000, max_iter = 200 }
+name_map = { pop = "pop", max_iter = "iter", c1 = "c1", c2 = "c2", w = "w" }
+
+[[algorithms.pso.sets]]
+name = "PSO - Best Configurations"
+variants = [
+  { w = 0.5, c1 = 2.0, c2 = 1.0, pop = 1000 },
+  { w = 0.5, c1 = 1.5, c2 = 1.5, pop = 1000 },
+  { w = 0.3, c1 = 1.3, c2 = 1.3, pop = 1000 },
+]

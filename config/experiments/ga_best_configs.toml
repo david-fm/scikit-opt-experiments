@@ -1,0 +1,23 @@
+[experiment]
+name = "ga_best_configs"
+output_dir = "outputs/runs/best_ga"
+runs = 100
+verbose = 1
+log_scale = false
+track_performance = false
+
+[[tasks]]
+objective_id = "rosenbrock"
+algorithm_id = "ga.modified.v1"
+objective_params = { n_dim = 4 }
+subdir_template = "{objective}_{algorithm}"
+lb = -8
+ub = 8
+
+[algorithms."ga.modified.v1"]
+base_params = { size_pop = 1000, max_iter = 200 }
+name_map = { size_pop = "pop", prob_mut = "mut", precision = "prec", window_size = "win", max_iter = "iter" }
+
+[[algorithms."ga.modified.v1".sets]]
+name = "Best GA"
+variants = [{ precision = 0.01, window_size = 3, prob_mut = 0.01 }]
